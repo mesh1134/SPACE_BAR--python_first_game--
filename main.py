@@ -1,6 +1,6 @@
 """
 THE BACKSTORY - You are a retired extra-terrestrial-military officer in the year 3000. You were looking to have a
-leisurely drinking session after a long week, however, the neighboring alien civilization chose today of all days to
+leisurely drinking session after a long week. However, the neighboring alien civilization chose today of all days to
 wage war - starting at your favorite bar! Do you still have what it takes after all these years
 to fend them off until reinforcements arrive??
 
@@ -15,10 +15,10 @@ pygame.font.init()
 # creating the window -
 window_width, window_height = 1000, 750
 window = pygame.display.set_mode((window_width, window_height))
-pygame.display.set_caption('SPACE BARS')
+pygame.display.set_caption('SPACE BAR')
 Background = pygame.image.load("space bar #2.jpeg")
 
-# initialising necessary constants -
+# initializing necessary constants -
 avatar_width = 65
 avatar_height = 90
 avatar_velocity = 10
@@ -31,7 +31,7 @@ clock = pygame.time.Clock()
 Font = pygame.font.SysFont("comic sans", 40)
 
 
-# the function that is used to draw the main elements -
+# The function that is used to draw the main elements -
 def drawing(avatar, t_elapsed, lasers_going_down, lasers_going_up):
     window.blit(Background, (0, 0))
     minutes = t_elapsed // 60
@@ -63,7 +63,7 @@ def main():
     start_t = time.time()
     hit = False
 
-    # initialising elements for laser creation -
+    # initializing elements for laser creation -
     lasers_going_down = []
     lasers_going_up = []
     laser_increment = 2000
@@ -72,7 +72,7 @@ def main():
         t_elapsed = round(time.time() - start_t)
         minutes = t_elapsed // 60
 
-        # creating the lasers in random x-positions -
+        # Creating the lasers in random x-positions -
         laser_tick_count += clock.tick(75)
         if laser_tick_count > laser_increment:
             for p in range(2):
@@ -120,7 +120,7 @@ def main():
                 hit = True
                 break
 
-        # what to do when the player has lost i.e. a laser hit the avatar
+        # What to do when the player has lost i.e. a laser hits the avatar
         if hit:
             # displaying defeat text
             defeat_font_1 = pygame.font.SysFont("century", 60)
@@ -142,7 +142,7 @@ def main():
             main()
             break
 
-        # the player has won if their time is at least 3 minutes
+        # The player has won if their time is at least 3 minutes
         if t_elapsed >= 180:
             # displaying victory text
             victory_font = pygame.font.SysFont("comic sans", 40)
