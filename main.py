@@ -43,9 +43,9 @@ def drawing(avatar, t_elapsed, lasers_going_down, lasers_going_up):
     window.blit(time_text, (8, 8))
     pygame.draw.rect(window, "black", avatar)
     for laser in lasers_going_down:
-        pygame.draw.rect(window, "cyan", laser)
+        pygame.draw.rect(window, "violet", laser)
     for laser in lasers_going_up:
-        pygame.draw.rect(window, "cyan", laser)
+        pygame.draw.rect(window, "violet", laser)
 
     pygame.display.update()
 
