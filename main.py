@@ -1,6 +1,6 @@
 """
 THE BACKSTORY - You are a retired extra-terrestrial-military officer in the year 3000. You were looking to have a
-leisurely drinking session after a long week. However, the neighboring alien civilization chose today of all days to
+leisurely drinking session after a long week, however, the neighboring alien civilization chose today of all days to
 wage war - starting at your favorite bar! Do you still have what it takes after all these years
 to fend them off until reinforcements arrive??
 
@@ -15,10 +15,10 @@ pygame.font.init()
 # creating the window -
 window_width, window_height = 1000, 750
 window = pygame.display.set_mode((window_width, window_height))
-pygame.display.set_caption('SPACE BAR')
+pygame.display.set_caption('SPACE BARS')
 Background = pygame.image.load("space bar #2.jpeg")
 
-# initializing necessary constants -
+# initialising necessary constants -
 avatar_width = 65
 avatar_height = 90
 avatar_velocity = 10
@@ -31,7 +31,7 @@ clock = pygame.time.Clock()
 Font = pygame.font.SysFont("comic sans", 40)
 
 
-# The function that is used to draw the main elements -
+# the function that is used to draw the main elements -
 def drawing(avatar, t_elapsed, lasers_going_down, lasers_going_up):
     window.blit(Background, (0, 0))
     minutes = t_elapsed // 60
@@ -39,13 +39,13 @@ def drawing(avatar, t_elapsed, lasers_going_down, lasers_going_up):
 
     # Format the time as a string
     time_string = "{:02d}:{:02d}".format(minutes, seconds)
-    time_text = Font.render("Time alive:"+time_string, 1, "white")
+    time_text = Font.render("Time alive:" + time_string, 1, "white")
     window.blit(time_text, (8, 8))
     pygame.draw.rect(window, "black", avatar)
     for laser in lasers_going_down:
-        pygame.draw.rect(window, "violet", laser)
+        pygame.draw.rect(window, "purple", laser)
     for laser in lasers_going_up:
-        pygame.draw.rect(window, "violet", laser)
+        pygame.draw.rect(window, "purple", laser)
 
     pygame.display.update()
 
@@ -57,13 +57,19 @@ def redraw(avatar, t_elapsed, lasers_going_down, lasers_going_up):
     pygame.time.delay(2000)
 
 
+def display_text(text, x, y):
+    window.blit(text,
+                ((window_width - x) / 2,
+                 (window_height - 2*y - 40) / 2), )
+
+
 def main():
     running = True
     avatar = pygame.Rect(window_width // 2, (window_height - avatar_height) // 2, avatar_width, avatar_height)
     start_t = time.time()
     hit = False
 
-    # initializing elements for laser creation -
+    # initialising elements for laser creation -
     lasers_going_down = []
     lasers_going_up = []
     laser_increment = 2000
@@ -72,7 +78,7 @@ def main():
         t_elapsed = round(time.time() - start_t)
         minutes = t_elapsed // 60
 
-        # Creating the lasers in random x-positions -
+        # creating the lasers in random x-positions -
         laser_tick_count += clock.tick(75)
         if laser_tick_count > laser_increment:
             for p in range(2):
@@ -80,8 +86,7 @@ def main():
                 laser_going_down = pygame.Rect(laser_x_coordinate, -laser_height, laser_width, laser_height)
                 lasers_going_down.append(laser_going_down)
                 laser_x_coordinate = random.randint(0, window_width - laser_width)
-                laser_going_up = pygame.Rect(laser_x_coordinate, window_height + laser_height, laser_width,
-                                             laser_height)
+                laser_going_up = pygame.Rect(laser_x_coordinate, window_height+laser_height, laser_width, laser_height)
                 lasers_going_up.append(laser_going_up)
 
             laser_increment = max(400, laser_increment - 50)
@@ -97,7 +102,7 @@ def main():
         key_dict = pygame.key.get_pressed()
         if key_dict[pygame.K_a] and avatar.x - avatar_velocity > 0:
             avatar.x -= avatar_velocity
-        if key_dict[pygame.K_d] and avatar.x + avatar_velocity + avatar_width < 1200:
+        if key_dict[pygame.K_d] and avatar.x + avatar_velocity + avatar_width < window_width:
             avatar.x += avatar_velocity
         if key_dict[pygame.K_w] and avatar.y - avatar_velocity > 0:
             avatar.y -= avatar_velocity
@@ -120,7 +125,7 @@ def main():
                 hit = True
                 break
 
-        # What to do when the player has lost i.e. a laser hits the avatar
+        # what to do when the player has lost i.e. a laser hit the avatar
         if hit:
             # displaying defeat text
             defeat_font_1 = pygame.font.SysFont("century", 60)
@@ -130,30 +135,28 @@ def main():
 
             redraw(avatar, t_elapsed, lasers_going_down, lasers_going_up)
 
-            window.blit(defeat_text_1,
-                        ((window_width - defeat_text_1.get_width()) / 2,
-                         (window_height - defeat_text_1.get_height() - defeat_text_2.get_height() - 40) / 2), )
-            window.blit(defeat_text_2,
-                        ((window_width - defeat_text_2.get_width()) / 2,
-                         (window_height - defeat_text_2.get_height()) / 2))
+            display_text(defeat_text_1, defeat_text_1.get_width(), defeat_text_1.get_height())
+            display_text(defeat_text_2, defeat_text_2.get_width(), defeat_text_2.get_height())
+
             pygame.display.update()
             pygame.time.delay(3000)
             # calling the main function so that game auto-continues after losing
             main()
             break
 
-        # The player has won if their time is at least 3 minutes
+        # the player has won if their time is at least 3 minutes
         if t_elapsed >= 180:
             # displaying victory text
             victory_font = pygame.font.SysFont("comic sans", 40)
-            victory_text_1 = victory_font.render("You have done it!"
-                                                 "The aliens are finally retreating and the bar is safe!", 1, "white")
+            victory_text_1 = victory_font.render("You have done it!", 1, "white")
+            victory_text_2 = victory_font.render("The aliens are finally retreating and the bar is safe!", 1, "white")
 
             redraw(avatar, t_elapsed, lasers_going_down, lasers_going_up)
 
-            window.blit(victory_text_1,
-                        ((window_width - victory_text_1.get_width()) / 2,
-                         (window_height - victory_text_1.get_height() - victory_text_1.get_height() - 40) / 2), )
+            display_text(victory_text_1, victory_text_1.get_width(), victory_text_1.get_height())
+            display_text(victory_text_2, victory_text_2.get_width(), victory_text_2.get_height()
+                         - victory_text_1.get_height())
+
             pygame.display.update()
             pygame.time.delay(5000)
             break
