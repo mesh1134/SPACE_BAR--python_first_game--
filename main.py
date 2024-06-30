@@ -136,7 +136,7 @@ def main():
             redraw(avatar, t_elapsed, lasers_going_down, lasers_going_up)
 
             display_text(defeat_text_1, defeat_text_1.get_width(), defeat_text_1.get_height())
-            display_text(defeat_text_2, defeat_text_2.get_width(), defeat_text_2.get_height())
+            display_text(defeat_text_2, defeat_text_2.get_width(), defeat_text_2.get_height() - defeat_text_1.get_height())
 
             pygame.display.update()
             pygame.time.delay(3000)
